@@ -1,0 +1,36 @@
+{% load static %}
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" type="text/css" href="{% static 'css/reset.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'css/app.css' %}">
+    </head>
+    <body>
+        <div id ="wrapper">
+            <form action="doLogin" id="form-login" method="post">
+                {% csrf_token %}
+                <h1 class="form-heading">FORM LOGIN</h1>
+                <div class="form-group">
+                    <input type="text" name='username' class="form-input" placeholder="user name">
+                </div>
+                <div class="form-group">
+                    <input type="password" name='password' class="form-input" placeholder="password">
+                </div>
+                <input type="submit" value="submit" class="form-submit">
+            </form>
+            
+        </div>
+        <!--[if lt IE 7]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+        
+        <script src="" async defer></script>
+    </body>
+</html>

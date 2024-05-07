@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html>
+    <head>
+        {% load static %}
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="">
+        <link rel="stylesheet" href="{%static 'css/bootstrap.min.css'%}">
+        <script src="{%static 'js/bootstrap.min.js'%}"></script>
+        <script src="{%static 'js/jquery-3.6.0.min.js'%}"></script>
+    </head>
+    <body>
+        <h3>staff list</h3>
+        <!--[if lt IE 7]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+        <table class = 'table table-bordered'>
+            <thead>
+                <tr>
+                    <td>ID</td>
+                    <td>NAME</td>
+                    <td>POSITION</td>
+                    <td>IMAGE</td>
+                    <td>FILE</td>
+                </tr>
+            </thead>
+            <tbody>
+                {% for employee in employees_list %}
+                <tr>
+                    <td>{{employee.employees_id}}</td>
+                    <td>{{employee.name}}</td>
+                    <td>{{employee.position}}</td>
+                    <td><img src="/home/media/{{employee.avata}}" alt = "" class="img" style="width: 80px;height: 80px;"></td>
+                    <td><a src="/home/media/{{employee.file_image}}" taget ="_blank">{{employee.file_image}}</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <script src="" async defer></script>
+    </body>
+</html>

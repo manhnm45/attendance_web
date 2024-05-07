@@ -1,0 +1,30 @@
+body{
+    background-image: url('');
+}
+
+header{
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    padding: 20px;
+}
+header .navbar {
+    display: flex;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    justify-content: space-between;
+}
+.navbar .menu-link{
+    display: flex;
+    gap: 40px;
+}
+.navbar .logo {
+    font-size: 2.1rem;
+    font-weight: 600;
+}
+.navbar a {
+    color: #030303;
+    text-decoration: none;
+}

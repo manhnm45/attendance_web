@@ -1,0 +1,22 @@
+body{
+    background-image: url('../image/bg.jpeg');
+}
+
+.header{
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    padding: 20px;
+}
+header .navbar {
+    display: flex;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    justify-content: space-between;
+}
+.navbar a {
+    color: #000;
+    text-decoration: none;
+}

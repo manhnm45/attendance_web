@@ -1,0 +1,31 @@
+{% load static %}
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="">
+        <link rel="stylesheet" type="text/css" href="{% static 'css/reset.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'css/holderhome.css' %}">
+    </head>
+    <body>
+        <header>
+            <nav class="navbar">
+                <a href="#" class="logo">HOME<span>.</span></a>
+                <ul class="menu-link">
+                    <li><a href="{% url 'liststaff' %}">staff list</a></li>
+                    <li><a href="#">calendar</a></li>
+                    <li><a href="#">add staff</a></li>
+                    <li><a href="{% url 'logout' %}">logout</a></li>
+                </ul>
+            </nav>
+        </header>
+    </body>
+</html>
