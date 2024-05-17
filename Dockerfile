@@ -1,6 +1,6 @@
 FROM python:3
 
-WORKDIR /data
+WORKDIR /manage
 
 COPY requirement.txt .
 
