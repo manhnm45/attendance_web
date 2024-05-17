@@ -17,7 +17,7 @@
 - python manage.py createsuperuser(create user)
 - python manage.py runserver
 
-### Run project wit docker
+### Run project with docker
 - turn on docker
 
 - cd manage_staff
