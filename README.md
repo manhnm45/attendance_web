@@ -22,7 +22,7 @@
 
 - cd manage_staff
 
-- docker compose up -d -build
+- docker compose up -d --build
 
 - docker compose run web python manage.py makemigrations
 
