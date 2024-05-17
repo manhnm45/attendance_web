@@ -29,6 +29,8 @@
                     <td>POSITION</td>
                     <td>IMAGE</td>
                     <td>FILE</td>
+                    <td>EDIT</td>
+                    <td>DELETE</td>
                 </tr>
             </thead>
             <tbody>
@@ -37,8 +39,10 @@
                     <td>{{employee.employees_id}}</td>
                     <td>{{employee.name}}</td>
                     <td>{{employee.position}}</td>
-                    <td><img src="/home/media/{{employee.avata}}" alt = "" class="img" style="width: 80px;height: 80px;"></td>
-                    <td><a src="/home/media/{{employee.file_image}}" taget ="_blank">{{employee.file_image}}</a></td>
+                    <td><img src="/home/media/Image/{{employee.avata}}" alt = "" class="img" style="width: 80px;height: 80px;"></td>
+                    <td><a src="/home/media/folder/{{employee.file_image}}" taget ="_blank">{{employee.file_image}}</a></td>
+                    <td><a href="/edit/{{employee.employees_id}}" class="btn btn-success btn-lg">Edit</a></td>
+                    <td><a href="/delete/{{employee.employees_id}}" class="btn btn-danger">Delete</a></td>
                 </tr>
                 {% endfor %}
             </tbody>

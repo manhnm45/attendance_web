@@ -1,0 +1,40 @@
+<<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html>
+    {% load static %}
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" type="text/css" href="{% static 'css/reset.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'css/addstaff.css' %}">
+    </head>
+    <body>
+        <div id = "wrapper">
+            <form action="edit/{{employees_id}}" class="add-staff" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <h2>FORM EDIT INFOR</h2></br>
+                <label for="name">FULL NAME</label>
+                <input type="text" name="name" value="{{employee.name}}"></br>
+
+                <label for="position">POSITION</label>
+                <input type="text" name="position" value="{{employee.position}}"></br>
+
+                <label for="avata">AVATA</label>
+                <input type="file" name="avata" value="{{employee.avata}}"></br>
+
+                <label for="file_image">FILE</label>
+                <input type="file" name="file_image" value="{{employee.file}}"></br>
+ 
+                <button class="bt_submit" type="submit">SAVE</button>
+                
+            </form>
+        </div>
+        
+    </body>
+</html>

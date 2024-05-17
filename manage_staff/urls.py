@@ -14,11 +14,15 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from home import views as home
 from employees import views as employee
 from django.conf.urls.static import static
 from django.conf import settings
+from rest_framework_simplejwt.views import (
+    TokenObtainPairView,
+    #TokenRefreshView,
+)
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', home.get_home, name = 'home'),
@@ -26,6 +30,15 @@ urlpatterns = [
     path('doLogin', home.do_login, name = "doLogin"),
     path('home/', home.home_holder,name='home_holder'),
     path('logout_user',home.logout_user, name ='logout'),
-    path('liststaff',home.check_list_staff,name='liststaff')
-
+    path('liststaff',home.check_list_staff,name='liststaff'),
+    path('add_staff',employee.add_staff, name='add_staff'),
+    path('savedb',employee.save_staff_db, name = 'savedb'),
+    path('error',employee.get_error, name='error'),
+    path('delete/<int:id>',employee.delete,name = 'delete'),
+    path('edit/<int:id>',employee.edit,name = 'edit'),
+    path('api-list/',employee.ShowAll, name = 'api-list'),
+    path("api-detail/<int:id>",employee.apidetail, name = 'apidetail'),
+    path('token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('images/<str:image_name>/', employee.serve_img, name='serve_image'),
+    
 ] + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

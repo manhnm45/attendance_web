@@ -9,9 +9,11 @@ from django.contrib.auth.views import LoginView
 from django.views.generic import TemplateView
 from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
+
 # Create your views here.
 # def get_home(request):
 #     return render(request, 'home.html')
+
 def get_home(request):
     return render(request, 'home.html')
 def do_login(request):
@@ -40,3 +42,4 @@ def logout_user(request):
     return HttpResponseRedirect(reverse('home'))
 def check_list_staff(request):
     return HttpResponseRedirect(reverse('employee'))
+
