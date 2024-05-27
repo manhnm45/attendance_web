@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     #'playground.apps.PlaygroundConfig',
     'home',
     'employees',
+    #'attendance',
     'rest_framework',
     'rest_framework_simplejwt',
 ]
@@ -109,7 +110,7 @@ REST_FRAMEWORK = {
 # }
 
 
-
+DEFAULT_AUTO_FIELD='django.db.models.AutoField'
 
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=5),

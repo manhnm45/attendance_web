@@ -40,5 +40,8 @@ urlpatterns = [
     path("api-detail/<int:id>",employee.apidetail, name = 'apidetail'),
     path('token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('images/<str:image_name>/', employee.serve_img, name='serve_image'),
+    path('attendance_holder/', employee.attendance_holder, name ='attendance_holder'),
+    path('api-attendance',employee.attendance_api, name = 'api-attendance'),
+    path('delete_attendance/<int:id>',employee.delete_attendance,name = 'delete_attendance'),
     
 ] + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

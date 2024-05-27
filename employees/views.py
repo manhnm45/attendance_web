@@ -9,6 +9,9 @@ from django.http import HttpResponse
 import mimetypes
 import os
 from datetime import timedelta
+from .models import attendance
+import datetime
+
 # Create your views here.
 def get_staffinfor(request):
     employees_list = employees.objects.filter().order_by('employees_id')
@@ -30,15 +33,24 @@ def save_staff_db(request):
         employee = employees.objects.create(name = name, position = position, avata= avata, file_image= file_image)
         employee.save()
         return redirect('liststaff')
-
     else:
         return render(request, 'error.html')
 
 def delete(request, id):
     employee = employees.objects.get(employees_id= id)
     employee.delete()
-
     return redirect("liststaff")  
+
+def delete_attendance(request, id):
+    attenc = attendance.objects.get(id= id)
+    attenc.delete()
+    return redirect("attendance_holder")
+
+def attendance_holder(request):
+    attendance_list = attendance.objects.filter().order_by('date')
+    return render(request,"attendance.html", {'attendance_list': attendance_list})
+
+
 
 def edit(request, id):
     employee = employees.objects.get(employees_id= id)
@@ -118,3 +130,61 @@ def serve_img(request,image_name):
         # Handle other errors (e.g., log the error and return a 500 response)
         print(f"Error serving image: {e}")
         return HttpResponse(status=500)
+    
+request_list = []  
+attendance_in = []
+@api_view(["POST"])
+@permission_classes([IsAuthenticated])
+def attendance_api(request):
+    
+    print("type time",type(request.data['time']))
+    iso_timestamp = request.data['time']
+    
+    dt = datetime.datetime.fromisoformat(iso_timestamp)
+    time_str = dt.strftime("%H:%M:%S")
+    dates = f"{dt.year}-{dt.month}-{dt.day}"
+    Employee = employees.objects.get(employees_id =request.data['id'])
+    if len(request_list) ==0:
+        request_list.append(request)
+        time_ins = time_str
+        time_outs = "working"
+        print("lenreques=0")
+        attendances = attendance.objects.create(
+                    employee = Employee,
+                    date = dates,
+                    time_in = time_ins,
+                    time_out = time_outs,
+                    location_check = request.data['location check']
+                )
+        request_list.append(request)
+        #request_list.clear()
+    else:
+        for requests in request_list:
+            check_in = False
+            if requests.data['id'] == request.data['id']:
+                print("checked")
+                request_list.remove(requests)
+                check_in = True
+                time_outs = time_str
+                attendances = attendance.objects.get(employee = Employee, date = dates)
+                print("attendance_timeout",attendances.time_out)
+                attendances.time_out = time_outs
+                print("attendance_timeout2",attendances.time_out)
+                attendances.save()
+                request_list.remove(requests)
+                break
+        if check_in == False:
+            print("checkin false")
+            request_list.append(request)
+            time_ins = time_str
+            time_outs = "working"
+            #request_list.clear()
+            attendances = attendance.objects.create(
+                employee = Employee,
+                date = dates,
+                time_in = time_ins,
+                time_out = time_outs,
+                location_check = request.data['location check']
+            )
+            
+    return Response("attendance success")
