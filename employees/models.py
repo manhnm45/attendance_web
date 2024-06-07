@@ -14,7 +14,7 @@ class employees(models.Model):
     
 
 class attendance(models.Model):
-    employee = models.ForeignKey(employees, on_delete= models.CASCADE,to_field='employees_id')
+    employee = models.ForeignKey(to = employees, on_delete= models.CASCADE,to_field='employees_id')
     date = models.CharField()
     time_in = models.CharField()
     time_out = models.CharField( null=True)

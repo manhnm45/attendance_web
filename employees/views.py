@@ -3,7 +3,7 @@ from .models import employees
 from .form import employeeform
 from rest_framework.decorators import api_view,permission_classes
 from rest_framework.response import Response
-from .serializers import employeeSerializer
+from .serializers import employeeSerializer, attendanceSerializer
 from rest_framework.permissions import IsAuthenticated
 from django.http import HttpResponse
 import mimetypes
@@ -11,7 +11,10 @@ import os
 from datetime import timedelta
 from .models import attendance
 import datetime
-
+from .filters import OrderFilter
+import json
+from django.http import JsonResponse
+from django.db.models import Q
 # Create your views here.
 def get_staffinfor(request):
     employees_list = employees.objects.filter().order_by('employees_id')
@@ -48,7 +51,10 @@ def delete_attendance(request, id):
 
 def attendance_holder(request):
     attendance_list = attendance.objects.filter().order_by('date')
-    return render(request,"attendance.html", {'attendance_list': attendance_list})
+    myfilters = OrderFilter(request.GET, queryset= attendance_list)
+    attendance_list = myfilters.qs
+    qs_json = json.dumps(list(attendance.objects.values()))
+    return render(request,"attendance.html", {'attendance_list': attendance_list , 'myfilters' : myfilters, 'qs_json' :qs_json})
 
 
 
@@ -145,7 +151,7 @@ def attendance_api(request):
     dates = f"{dt.year}-{dt.month}-{dt.day}"
     Employee = employees.objects.get(employees_id =request.data['id'])
     if len(request_list) ==0:
-        request_list.append(request)
+        #request_list.append(request)
         time_ins = time_str
         time_outs = "working"
         print("lenreques=0")
@@ -156,6 +162,7 @@ def attendance_api(request):
                     time_out = time_outs,
                     location_check = request.data['location check']
                 )
+        serializer = attendanceSerializer(attendances, many = False)
         request_list.append(request)
         #request_list.clear()
     else:
@@ -163,7 +170,6 @@ def attendance_api(request):
             check_in = False
             if requests.data['id'] == request.data['id']:
                 print("checked")
-                request_list.remove(requests)
                 check_in = True
                 time_outs = time_str
                 attendances = attendance.objects.get(employee = Employee, date = dates)
@@ -171,6 +177,7 @@ def attendance_api(request):
                 attendances.time_out = time_outs
                 print("attendance_timeout2",attendances.time_out)
                 attendances.save()
+                serializer = attendanceSerializer(attendances, many = False)
                 request_list.remove(requests)
                 break
         if check_in == False:
@@ -186,5 +193,22 @@ def attendance_api(request):
                 time_out = time_outs,
                 location_check = request.data['location check']
             )
-            
-    return Response("attendance success")
+            serializer = attendanceSerializer(attendances, many = False)
+    return Response(serializer.data)
+
+
+
+def search_attendance(request):
+    filter_value = request.POST['filter']
+    print("filter_value",filter_value)
+    filtered_data = attendance.objects.filter(
+    Q(date__icontains=filter_value) | Q(location_check__icontains=filter_value) | Q(employee__name__icontains=filter_value))
+    data_list=[{
+        'id':obs.id ,'id_staff': obs.id_staff, 'name': obs.name,'date': obs.date, 'time_in':obs.time_in, 'time_out': obs.time_out, 'location_check': obs.location_check 
+    } for obs in filtered_data
+    ]
+    #print(data_list)
+    return JsonResponse({'data': data_list})
+
+def visual_employee(request):
+    return render(request,'visual_employee.html')

@@ -23,6 +23,7 @@ from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     #TokenRefreshView,
 )
+from django.views.decorators.csrf import csrf_exempt
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', home.get_home, name = 'home'),
@@ -43,5 +44,7 @@ urlpatterns = [
     path('attendance_holder/', employee.attendance_holder, name ='attendance_holder'),
     path('api-attendance',employee.attendance_api, name = 'api-attendance'),
     path('delete_attendance/<int:id>',employee.delete_attendance,name = 'delete_attendance'),
+    path('filter-data/', csrf_exempt(employee.search_attendance), name = "filter-data"),
+    path('visual_employee',employee.visual_employee,name = 'visual_employee'),
     
 ] + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

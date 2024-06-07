@@ -8,14 +8,6 @@
     </a>
 
     <!-- Sidebar -->
-    <div class="sidebar">
-      <!-- Sidebar user panel (optional) -->
-      <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-        <div class="image">
-          <img src="{% static 'dist/img/user2-160x160.jpg' %}" class="img-circle elevation-2" alt="User Image">
-        </div>
-        
-      </div>
 
       <!-- Sidebar Menu -->
       <nav class="mt-2">
@@ -23,8 +15,17 @@
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
           <li class="nav-item">
-            {% url 'admin_home' as admin_home %}
-            <a href="{{ attendance_holder }}" class="nav-link {% if request.path == admin_home %} active {% endif %}">
+            {% url 'attendance_holder' as attendance_holder %}
+            <a href="{{ attendance_holder }}" class="nav-link {% if request.path == attendance_holder %} active {% endif %}">
+              <i class="nav-icon fas fa-th"></i>
+              <p>
+                Attendance table
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            {% url 'visual_employee' as visual_employee %}
+            <a href="{{ visual_employee }}" class="nav-link {% if request.path == visual_employee %} active {% endif %}">
               <i class="nav-icon fas fa-th"></i>
               <p>
                 Home

@@ -1,10 +1,10 @@
-<<!DOCTYPE html>
+{% load static %}
+<!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
 <!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
 <html>
-    {% load static %}
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -12,29 +12,29 @@
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" type="text/css" href="{% static 'css/reset.css' %}">
-        <link rel="stylesheet" type="text/css" href="{% static 'css/addstaff.css' %}">
-    </head>
-    <body>
-        <div id = "wrapper">
+        <link rel="stylesheet" type="text/css" href="{% static 'css/holderhome.css' %}">
+    
+    
+        <div id="wrapper">
             <form action="savedb" class="add-staff" method="post" enctype="multipart/form-data">
-                {% csrf_token %}
-                <h2>FORM ADD STAFF</h2></br>
+                <input type="hidden" name="csrfmiddlewaretoken" value="9NVp2BSCdPUfVcFFfDpPoMfsg6sGZzIGF3pgYEGIiFnPUTYPU9enllK3gT3oXdjR">
+                <h2>FORM ADD STAFF</h2><br>
                 <label for="name">FULL NAME</label>
-                <input type="text" name="name"></br>
+                <input type="text" name="name"><br>
 
                 <label for="position">POSITION</label>
-                <input type="text" name="position"></br>
+                <input type="text" name="position"><br>
 
                 <label for="avata">AVATA</label>
-                <input type="file" name="avata"></br>
+                <input type="file" name="avata"><br>
 
                 <label for="file_image">POSITION</label>
-                <input type="file" name="file_image"></br>
+                <input type="file" name="file_image"><br>
  
                 <button class="bt_submit" type="submit">ADD</button>
                 
             </form>
         </div>
         
-    </body>
-</html>
+    
+</body></html>

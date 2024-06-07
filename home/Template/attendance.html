@@ -1,11 +1,12 @@
-<<!DOCTYPE html>
+<!DOCTYPE html>
+{% load static %}
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
 <!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
 <html>
     <head>
-        {% load static %}
+        
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="description" content="">
@@ -128,56 +129,65 @@
 
 
                 <div class="row">
-                <div class="col-12">
-                    <div class="card">
-                    <div class="card-header">
-                        <h3 class="card-title">Staff Details</h3>
+                    <div class="col">
 
+                        <div class="card">
+
+                        <div class="card-header">
+                            <!--<div class="card-tools">
+                                <div class="input-group " style="width: 1000px;">
+                                    <div class="input-group-append">
+                                    <form method="get">
+                                        {{myfilters.form}}
+                                    <button type="submit" class="btn btn-default">Search  <i class="fas fa-search"></i></button>
+                                    </form>
+                                    </div>
+                                </div>
+                            </div>-->
+                        </div>
+                        <!-- /.card-header -->
                         <div class="card-tools">
-                        <div class="input-group input-group-sm" style="width: 150px;">
-                            <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
-
-                            <div class="input-group-append">
-                            <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
+                            <div class="row">
+                                <div class="col-md8"></div>
+                                <div class="col-md4" style=" padding-left: 10px">
+                                    <div class="form-group" style="width: 270px;">
+                                        <input type="text" class="form-control float-right" id="searchField" placeholder="Filter date, name or location check">
+                                    </div>
+                                </div>
                             </div>
+                            <table id ="box" class="table table-hover text-nowrap">
+                            <thead>
+                                <tr>
+                                    <th data-colum='id' data-order="desc">ID attendance &#9650</th>
+                                    <th data-colum='id_staff' data-order="desc">ID staff &#9650</th>
+                                    <th data-colum='name' data-order="desc">name &#9650</th>
+                                    <th data-colum='date' data-order="desc">date &#9650</th>
+                                    <th data-colum='time_in' data-order="desc">time in &#9650</th>
+                                    <th data-colum='time_out' data-order="desc">time out &#9650</th>
+                                    <th>location check</th>
+                                    <td>DELETE</td>
+                                </tr>
+                            </thead>
+                            <tbody id="myTable">
+                             {% for attendance in attendance_list %}
+                                <!--<tr>
+                                   <td>{{ attendance.id }}</td>
+                                    <td>{{ attendance.id_staff }}</td>
+                                    <td>{{ attendance.name }}</td>
+                                    <td>{{ attendance.date }}</td>
+                                    <td>{{ attendance.time_in }}</td>
+                                    <td>{{ attendance.time_out }}</td>
+                                    <td>{{attendance.location_check }}</td>
+                                    <td><a href="/delete_attendance/{{attendance.id}}" class="btn btn-danger">Delete</a></td>
+                                </tr>
+                            {% endfor %}-->
+                            </tbody>
+                            </table>
                         </div>
+                        <!-- /.card-body -->
                         </div>
+                        <!-- /.card -->
                     </div>
-                    <!-- /.card-header -->
-                    <div class="card-body table-responsive p-0">
-                        <table class="table table-hover text-nowrap">
-                        <thead>
-                            <tr>
-                                <th>ID attendance</th>
-                                <th>ID staff</th>
-                                <th>name</th>
-                                <th>date</th>
-                                <th>time in</th>
-                                <th>time out</th>
-                                <th>location check</th>
-                                <td>DELETE</td>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        {% for attendance in attendance_list %}
-                            <tr>
-                                <td>{{ attendance.id }}</td>
-                                <td>{{ attendance.id_staff }}</td>
-                                <td>{{ attendance.name }}</td>
-                                <td>{{ attendance.date }}</td>
-                                <td>{{ attendance.time_in }}</td>
-                                <td>{{ attendance.time_out }}</td>
-                                <td>{{attendance.location_check }}</td>
-                                <td><a href="/delete_attendance/{{attendance.id}}" class="btn btn-danger">Delete</a></td>
-                            </tr>
-                        {% endfor %}
-                        </tbody>
-                        </table>
-                    </div>
-                    <!-- /.card-body -->
-                    </div>
-                    <!-- /.card -->
-                </div>
                 </div>
             </div>
             </section>
@@ -185,4 +195,74 @@
         
 
     </body>
+
+
+
+
+<script>
+    const filterInput = document.getElementById('searchField');
+    const tableBody = document.querySelector('tbody');
+
+    filterInput.addEventListener('input', filterData); // Use 'input' event instead of 'click'
+    filterData()
+    
+    
+    function filterData(){
+        const filterValue = filterInput.value.toLowerCase();
+    
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', '/filter-data/'); // Replace with your server-side URL
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xhr.onload = function() {
+            
+            if (xhr.status === 200) {
+            const filteredData = JSON.parse(xhr.responseText);
+            data = filteredData.data
+            $('th').on('click',function(){
+                var colum = $(this).data('colum')
+                var order =  $(this).data('order')
+                var text = $(this).html()
+                text = text.substring(0, text.length - 1)
+                console.log(data)
+                console.log('colum was clicked', colum, order)
+                if(order == 'desc'){
+                    $(this).data('order',"asc")
+                    data = data.sort((a,b) => a[colum] > b[colum] ? 1: -1)
+                    text += '&#9660'
+                }else{
+                    $(this).data('order',"desc")
+                    data = data.sort((a,b) => a[colum] < b[colum] ? 1: -1)
+                    text += '&#9650'
+                }
+                $(this).html(text)
+                renderTable(data);
+            })
+            renderTable(filteredData.data);
+            } else {
+            console.error('Error filtering data:', xhr.statusText);
+            }
+        };
+        xhr.send('filter=' + filterValue);
+    }
+
+    function renderTable(data) {
+        tableBody.innerHTML = ''; // Clear existing table content
+        data.forEach(row => {
+            const tableRow = document.createElement('tr');
+            tableRow.innerHTML = `
+            <td>${row.id}</td>
+            <td>${row.id_staff}</td>
+            <td>${row.name}</td>
+            <td>${row.date}</td>
+            <td>${row.time_in}</td>
+            <td>${row.time_out}</td>
+            <td>${row.location_check}</td>
+            <td><a href="/delete_attendance/${row.id}" class="btn btn-danger">Delete</a></td>
+            `;
+            tableBody.appendChild(tableRow);
+        });
+
+    }
+    
+</script>
 </html>

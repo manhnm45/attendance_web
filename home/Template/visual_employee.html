@@ -1,11 +1,12 @@
-<<!DOCTYPE html>
+<!DOCTYPE html>
+{% load static %}
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
 <!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
 <html>
     <head>
-        {% load static %}
+        
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="description" content="">
@@ -127,60 +128,17 @@
             <div class="container-fluid">
 
 
-                <div class="row">
-                <div class="col-12">
-                    <div class="card">
-                    <div class="card-header">
-                        <h3 class="card-title">Staff Details</h3>
-
-                        <div class="card-tools">
-                        <div class="input-group input-group-sm" style="width: 150px;">
-                            <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
-
-                            <div class="input-group-append">
-                            <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
-                            </div>
-                        </div>
-                        </div>
-                    </div>
-                    <!-- /.card-header -->
-                    <div class="card-body table-responsive p-0">
-                        <table class="table table-hover text-nowrap">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>name</th>
-                                <th>date</th>
-                                <th>time in</th>
-                                <th>time out</th>
-                                <th>location check</th>
-                            
-                            </tr>
-                        </thead>
-                        <tbody>
-                        {% for attendance in attendance_list %}
-                            <tr>
-                                <td>{{ attendance.id_staff }}</td>
-                                <td>{{ attendance.name }}</td>
-                                <td>{{ attendance.date }}</td>
-                                <td>{{ attendance.time_in }}</td>
-                                <td>{{ attendance.time_out }}</td>
-                                <td>{{attendance.location_check }}</td>
-                            
-                            </tr>
-                        {% endfor %}
-                        </tbody>
-                        </table>
-                    </div>
-                    <!-- /.card-body -->
-                    </div>
-                    <!-- /.card -->
-                </div>
-                </div>
+                
+                
             </div>
             </section>
             <!-- /.content -->
         
 
     </body>
+
+
+
+
+
 </html>
